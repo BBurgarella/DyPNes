@@ -446,7 +446,7 @@ class KeyBinds:
             Screen = numpy.concatenate((temp0,temp1,temp2,temp3))
             Vector = Model.predict(numpy.array([Screen,]))
             Vector = numpy.concatenate((Vector[0],Vector[1]),axis = 1)
-            Test.SendInput(numpy.round((Vector[0])),FPS)
+            self.SendInput(numpy.round((Vector[0])),FPS)
             #print("  input: "+str(numpy.round(Vector[0]+0.1)))
             time.sleep(float(factor)/float(FPS))
             ToggleKey.getstatus()
