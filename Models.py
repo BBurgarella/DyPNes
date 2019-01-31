@@ -37,26 +37,23 @@ def initBranchedModel(scale, Verbose = True):
     #Convolution NN#1 - First layers#
     #################################
 
-    x = Conv2D(128,(3,3))(inputs)
+    x = Conv2D(32,(3,3))(inputs)
     x = LeakyReLU()(x)
-    x = MaxPooling2D(pool_size=(3,3))(x)
+
+    x = Conv2D(32,(3,3))(inputs)
+    x = LeakyReLU()(x)
+
+    x = Conv2D(64,(3,3))(x)
+    x = LeakyReLU()(x)
+    x = MaxPooling2D(pool_size=(2,2))(x)
 
     x = Conv2D(128,(3,3))(x)
     x = LeakyReLU()(x)
     x = MaxPooling2D(pool_size=(2,2))(x)
 
-    x = Conv2D(64,(3,3))(x)
+    x = Conv2D(256,(3,3))(x)
     x = LeakyReLU()(x)
-    x = MaxPooling2D(pool_size=(2,2))(x)
-
-    x = Conv2D(64,(3,3))(x)
-    x = LeakyReLU()(x)
-
-    x = Conv2D(32,(3,3))(x)
-    x = LeakyReLU()(x)
-
-    x = Conv2D(8,(3,3))(x)
-    x = LeakyReLU()(x)
+    x = MaxPooling2D(pool_size=(3,3))(x)
 
     #Convlution Layers output
     ConvOut = Flatten()(x)
@@ -67,17 +64,17 @@ def initBranchedModel(scale, Verbose = True):
     x = Dense(64)(ConvOut)
     x = LeakyReLU()(x)
 
-    x = Dense(32)(ConvOut)
+    x = Dense(32)(x)
     x = LeakyReLU()(x)
 
-    x = Dense(16)(ConvOut)
+    x = Dense(16)(x)
     x = LeakyReLU()(x)
 
-    x = Dense(12)(ConvOut)
+    x = Dense(12)(x)
     x = LeakyReLU()(x)
 
     #Dense #1 Output
-    Direction = Dense(4,activation = 'sigmoid')(ConvOut)
+    Direction = Dense(4,activation = 'sigmoid')(x)
 
     #################################
     #Dense NN#2 - Predicting A and B#
